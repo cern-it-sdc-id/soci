@@ -88,4 +88,17 @@ diff -Nur soci-3.0.0/src/core/soci-simple.cpp soci-3.0.0_4-pack/src/core/soci-si
 +#include <cstdio>
  
  using namespace soci;
+
+
+diff -Nur soci-3.0.0/src/backends/postgresql/test/test-postgresql.cpp soci-3.0.0_4-pack/src/backends/postgresql/test/test-postgresql.cpp
+--- soci-3.0.0/src/backends/postgresql/test/test-postgresql.cpp 2008-06-05 22:41:58.000000000 +0200
++++ soci-3.0.0_4-pack/src/backends/postgresql/test/test-postgresql.cpp  2010-01-23 13:17:28.000000000 +0100
+@@ -15,6 +15,7 @@
+ #include <cmath>
+ #include <ctime>
+ #include <cstdlib>
++#include <cstring>
  
+ using namespace soci;
+ using namespace soci::tests;
+
