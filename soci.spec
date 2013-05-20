@@ -21,7 +21,7 @@
 ##
 #
 Name:           soci
-Version:        3.1.0
+Version:        3.2.1
 Release:        1%{?dist}
 
 Summary:        The database access library for C++ programmers
@@ -29,12 +29,11 @@ Summary:        The database access library for C++ programmers
 Group:          System Environment/Libraries
 License:        Boost
 URL:            http://%{name}.sourceforge.net
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.zip
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires:  cmake
+BuildRequires:  cmake28
 BuildRequires:  boost-devel
-BuildRequires:  libtool
 
 %description
 %{name} is a C++ database access library that provides the
@@ -197,10 +196,11 @@ library. The documentation is the same as at the %{name} web page.
 
 # Rename change-log and license file, so that they comply with
 # packaging standard
+mv README.md README
 mv CHANGES ChangeLog
 mv LICENSE_1_0.txt COPYING
-echo "2011-10-08:" > NEWS
-echo "- Version 3.1.0" >> NEWS
+echo "2013-04-13:" > NEWS
+echo "- Version 3.2.1" >> NEWS
 echo "- See the ChangeLog file for more details." >> NEWS
 
 
@@ -218,7 +218,7 @@ echo "- See the ChangeLog file for more details." >> NEWS
 mkdir tmpbuild
 pushd tmpbuild
 # -DCMAKE_INSTALL_PREFIX:PATH=$RPM_BUILD_ROOT
-%cmake \
+cmake28 \
  -DSOCI_EMPTY=%{?with_empty:ON}%{?without_empty:OFF} \
  -DSOCI_SQLITE3=%{?with_sqlite3:ON}%{?without_sqlite3:OFF} \
  -DSOCI_POSTGRESQL=%{?with_postgresql:ON}%{?without_postgresql:OFF} \
@@ -350,6 +350,21 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon May 20 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> 3.2.1-1
+- Upstream integration
+
+* Fri Feb 15 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.1.0-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
+* Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.1.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
+* Tue Feb 28 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.1.0-3
+- Rebuilt for c++ ABI breakage
+
+* Sat Jan 14 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Mon Oct 31 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 3.1.0-1
 - Upstream integration
 - New CMake build system
