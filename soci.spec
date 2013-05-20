@@ -219,6 +219,7 @@ mkdir tmpbuild
 pushd tmpbuild
 # -DCMAKE_INSTALL_PREFIX:PATH=$RPM_BUILD_ROOT
 cmake28 \
+ -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DSOCI_EMPTY=%{?with_empty:ON}%{?without_empty:OFF} \
  -DSOCI_SQLITE3=%{?with_sqlite3:ON}%{?without_sqlite3:OFF} \
  -DSOCI_POSTGRESQL=%{?with_postgresql:ON}%{?without_postgresql:OFF} \
