@@ -22,7 +22,7 @@
 #
 Name:           soci
 Version:        3.2.2
-Release:        2%{?dist}
+Release:        2.fts3%{?dist}
 
 Summary:        The database access library for C++ programmers
 
@@ -31,6 +31,8 @@ License:        Boost
 URL:            http://%{name}.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
+# https://github.com/SOCI/soci/pull/213
+Patch0:		soci-oracle-spaces.patch
 
 BuildRequires:  cmake28
 BuildRequires:  boost-devel
@@ -44,7 +46,7 @@ the C++ standard.
 %{?with_sqlite3:%package        sqlite3
 Summary:        SQLite3 back-end for %{name}
 Group:          System Environment/Libraries
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 BuildRequires:  sqlite-devel
 
 %description    sqlite3
@@ -56,7 +58,7 @@ install %{name}-sqlite3.}
 %{?with_mysql:%package        mysql
 Summary:        MySQL back-end for %{name}
 Group:          System Environment/Libraries
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 BuildRequires:  mysql-devel
 
 %description    mysql
@@ -68,7 +70,7 @@ install %{name}-mysql.}
 %{?with_postgresql:%package        postgresql
 Summary:        PostGreSQL back-end for %{name}
 Group:          System Environment/Libraries
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 BuildRequires:  postgresql-devel
 
 %description    postgresql
@@ -80,7 +82,7 @@ install %{name}-postgresql.}
 %{?with_odbc:%package        odbc
 Summary:        ODBC back-end for %{name}
 Group:          System Environment/Libraries
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 BuildRequires:  unixODBC-devel
 
 %description    odbc
@@ -92,7 +94,7 @@ install %{name}-odbc.}
 %{?with_oracle:%package        oracle
 Summary:        Oracle back-end for %{name}
 Group:          System Environment/Libraries
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    oracle
 This package contains the Oracle back-end for %{name}, i.e.,
@@ -104,7 +106,7 @@ use %{name} in your programs with Oracle, you will need to install
 %package        devel
 Summary:        Header files, libraries and development documentation for %{name}
 Group:          Development/Libraries
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 Requires:       pkgconfig
 
 %description    devel
@@ -115,8 +117,8 @@ programs using %{name}, you will need to install %{name}-devel.
 %{?with_sqlite3:%package        sqlite3-devel
 Summary:        SQLite3 back-end for %{name}
 Group:          Development/Libraries
-Requires:       %{name}-devel = %{version}-%{release}
-Requires:       %{name}-sqlite3 = %{version}-%{release}
+Requires:       %{name}-devel = %{version}
+Requires:       %{name}-sqlite3 = %{version}
 Requires:       sqlite-devel
 
 %description    sqlite3-devel
@@ -128,8 +130,8 @@ to install %{name}-sqlite3.}
 %{?with_mysql:%package        mysql-devel
 Summary:        MySQL back-end for %{name}
 Group:          Development/Libraries
-Requires:       %{name}-devel = %{version}-%{release}
-Requires:       %{name}-mysql = %{version}-%{release}
+Requires:       %{name}-devel = %{version}
+Requires:       %{name}-mysql = %{version}
 Requires:       mysql-devel
 
 %description    mysql-devel
@@ -141,8 +143,8 @@ to install %{name}-mysql.}
 %{?with_postgresql:%package        postgresql-devel
 Summary:        PostGreSQL back-end for %{name}
 Group:          Development/Libraries
-Requires:       %{name}-devel = %{version}-%{release}
-Requires:       %{name}-postgresql = %{version}-%{release}
+Requires:       %{name}-devel = %{version}
+Requires:       %{name}-postgresql = %{version}
 Requires:       postgresql-devel
 
 %description    postgresql-devel
@@ -154,8 +156,8 @@ will need to install %{name}-postgresql.}
 %{?with_odbc:%package        odbc-devel
 Summary:        ODBC back-end for %{name}
 Group:          Development/Libraries
-Requires:       %{name}-devel = %{version}-%{release}
-Requires:       %{name}-odbc = %{version}-%{release}
+Requires:       %{name}-devel = %{version}
+Requires:       %{name}-odbc = %{version}
 Requires:       unixODBC-devel
 
 %description    odbc-devel
@@ -167,8 +169,8 @@ to install %{name}-odbc.}
 %{?with_oracle:%package        oracle-devel
 Summary:        Oracle back-end for %{name}
 Group:          Development/Libraries
-Requires:       %{name}-devel = %{version}-%{release}
-Requires:       %{name}-oracle = %{version}-%{release}
+Requires:       %{name}-devel = %{version}
+Requires:       %{name}-oracle = %{version}
 
 %description    oracle-devel
 This package contains the Oracle back-end for %{name}, i.e., header
@@ -193,6 +195,7 @@ library. The documentation is the same as at the %{name} web page.
 
 %prep
 %setup -q
+%patch0 -p2
 
 # Rename change-log and license file, so that they comply with
 # packaging standard
@@ -351,6 +354,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Sep 30 2014 Alejandro Alvarez Ayllon <aalvarez@cern.ch> - 3.2.2-2.fts3
+- Patching Oracle to accept whitespaces in the connection
+
 * Sun Sep 21 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.2.2-1
 - Upstream integration
 
