@@ -21,8 +21,8 @@
 ##
 #
 Name:           soci
-Version:        3.2.2
-Release:        4.fts3%{?dist}
+Version:        3.2.3
+Release:        1.fts3%{?dist}
 
 Summary:        The database access library for C++ programmers
 
@@ -36,6 +36,7 @@ Patch0:		soci-oracle-spaces.patch
 
 BuildRequires:  cmake
 BuildRequires:  boost-devel
+BuildRequires:  dos2unix
 
 %description
 %{name} is a C++ database access library that provides the
@@ -195,6 +196,7 @@ library. The documentation is the same as at the %{name} web page.
 
 %prep
 %setup -q
+dos2unix backends/oracle/factory.cpp
 %patch0 -p2
 
 # Rename change-log and license file, so that they comply with
@@ -353,8 +355,14 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Tue Sep 30 2014 Alejandro Alvarez Ayllon <aalvarez@cern.ch> - 3.2.2-4.fts3
+* Mon Apr 27 2015 Alejandro Alvarez Ayllon <aalvarez@cern.ch> - 3.2.3-1.fts3
 - Patching Oracle to accept whitespaces in the connection 
+
+* Thu Apr 09 2015 Fedora Release Monitoring <release-monitoring@fedoraproject.org> - 3.2.3-1
+- Update to 3.2.3 (#1210126)
+
+* Tue Jan 27 2015 Petr Machata <pmachata@redhat.com> - 3.2.2-5
+- Rebuild for boost 1.57.0
 
 * Mon Aug 18 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.2.2-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild

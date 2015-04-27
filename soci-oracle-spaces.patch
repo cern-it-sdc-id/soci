@@ -1,5 +1,5 @@
 diff --git a/src/backends/oracle/factory.cpp b/src/backends/oracle/factory.cpp
-index 7c80989..54c92c9 100644
+index b7b0599..8dfd453 100644
 --- a/src/backends/oracle/factory.cpp
 +++ b/src/backends/oracle/factory.cpp
 @@ -22,51 +22,70 @@
@@ -98,4 +98,3 @@ index 7c80989..54c92c9 100644
          if (key == "service")
          {
              serviceName = value;
-
